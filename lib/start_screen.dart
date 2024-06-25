@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // String text = 'Learn Flutter the fun way!';
 
@@ -16,7 +17,7 @@ class StartScreen extends StatelessWidget {
           Image.asset(
             'assets/images/quiz-logo.png',
             width: 200,
-            color: const Color.fromARGB(200, 255, 255, 255),
+            color: const Color.fromARGB(199, 255, 229, 79),
           ),
 
           // Opacity(
@@ -30,11 +31,11 @@ class StartScreen extends StatelessWidget {
             height: 80,
           ),
 
-          const Text(
+          Text(
             'Learn Flutter the fun way!',
-            style: TextStyle(
-              color: Colors.white,
+            style: GoogleFonts.roboto(
               fontSize: 22,
+              color: Colors.amber,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -47,7 +48,7 @@ class StartScreen extends StatelessWidget {
             onPressed: startQuiz,
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
-                foregroundColor: Colors.white,
+                foregroundColor: Colors.amber,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
                 textStyle: const TextStyle(
