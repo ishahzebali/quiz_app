@@ -12,6 +12,7 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionsScreen> {
+  
   @override
   Widget build(context) {
     final currentQuestion = questions[0];
@@ -24,6 +25,7 @@ class _QuestionScreenState extends State<QuestionsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            
             const SizedBox(height: 70),
             Text(
               currentQuestion.text,
