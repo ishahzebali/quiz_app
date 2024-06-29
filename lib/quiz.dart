@@ -14,18 +14,13 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  final List<String> selectedAnswers = [];
-  Widget? activeScreen;
+  List<String> selectedAnswers = [];
 
-  @override
-  void initState() {
-    activeScreen = StartScreen(switchScreen);
-    super.initState();
-  }
+  var activeScreen = 'start-screen';
 
   void switchScreen() {
     setState(() {
-      activeScreen = QuestionsScreen(onSelectAnswer: chooseAnswer);
+      activeScreen = 'questions-screen';
     });
   }
 
@@ -34,13 +29,43 @@ class _QuizState extends State<Quiz> {
 
     if (selectedAnswers.length == questions.length) {
       setState(() {
-        activeScreen = const ResultsScreen();
+        activeScreen = 'result-screen';
       });
     }
   }
 
+  void restartQuiz() {
+    setState(
+      () {
+        selectedAnswers = [];
+        activeScreen = 'questions-screen';
+      },
+    );
+  }
+
   @override
   Widget build(context) {
+    Widget screenWidget = StartScreen(
+      switchScreen,
+    );
+
+    if (activeScreen == 'questions-screen') {
+      setState(() {
+        screenWidget = QuestionsScreen(
+          onSelectAnswer: chooseAnswer,
+        );
+      });
+    }
+
+    if (activeScreen == 'result-screen') {
+      setState(() {
+        screenWidget = ResultsScreen(
+          choosenAnswers: selectedAnswers,
+          onRestart: restartQuiz,
+        );
+      });
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -57,8 +82,9 @@ class _QuizState extends State<Quiz> {
             ),
           ),
 
-          // child: Center(
-          child: activeScreen,
+          // child: Center
+
+          child: screenWidget,
         ),
       ),
     );
@@ -67,8 +93,13 @@ class _QuizState extends State<Quiz> {
 
 
 
+
+
+
 // import 'package:flutter/material.dart';
+// import 'package:quiz_app/data/questions.dart';
 // import 'package:quiz_app/questions_screen.dart';
+// import 'package:quiz_app/results_screen.dart';
 // import 'package:quiz_app/start_screen.dart';
 
 // class Quiz extends StatefulWidget {
@@ -81,40 +112,71 @@ class _QuizState extends State<Quiz> {
 // }
 
 // class _QuizState extends State<Quiz> {
-//   Widget? activeScreen; // Make activeScreen nullable
+//   //Widget? activeScreen;
 
-//   @override
-//   void initState() {
-//     activeScreen = StartScreen(_switchScreen);  // Initialize here
-//     super.initState();
+//   // @override
+//   // void initState() {
+//   //   activeScreen = StartScreen(swichScreen);
+//   //   super.initState();
+//   // }
+
+//   List<String> selectedAnswer = [];
+//   var activeScreen = 'start-screen';
+
+//   void swichScreen() {
+//     setState(() {
+//       activeScreen = 'questions-screen';
+//     });
 //   }
 
-//   void _switchScreen() {
+//   void chooseAnswer(String answer) {
+//     selectedAnswer.add(answer);
 //     setState(() {
-//       activeScreen = const QuestionsScreen();
+//       if (selectedAnswer.length == questions.length) {
+//         //selectedAnswer = [];
+
+//         activeScreen = 'result-screen';
+//       }
+//     });
+//   }
+
+//   void restartQuiz() {
+//     setState(() {
+//       selectedAnswer = [];
+//       activeScreen = 'start-screen';
 //     });
 //   }
 
 //   @override
-//   Widget build(BuildContext context) {
+//   Widget build(context) {
+//     Widget screenWidget = StartScreen(swichScreen);
+
+//     if (activeScreen == 'questions-screen') {
+//       setState(() {
+//         screenWidget = QuestionsScreen(onSelectAnswer: chooseAnswer);
+//       });
+//     }
+
+//     if (activeScreen == 'result-screen') {
+//       setState(() {
+//         screenWidget = ResultsScreen(
+//           choosenAnswers: selectedAnswer,
+//           onRestart: restartQuiz,
+//         );
+//       });
+//     }
+
 //     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: Scaffold(
-//         body: Container(
+//         debugShowCheckedModeBanner: false,
+//         home: Scaffold(
+//             body: Container(
 //           decoration: const BoxDecoration(
-//             gradient: LinearGradient(
-//               colors: [
-//                 Colors.purpleAccent,
-//                 Color.fromARGB(255, 182, 32, 184),
-//                 Colors.pinkAccent
-//               ],
-//               begin: Alignment.topLeft,
-//               end: Alignment.bottomRight,
-//             ),
+//             gradient: LinearGradient(colors: [
+//               Color.fromARGB(255, 78, 13, 151),
+//               Color.fromARGB(255, 107, 15, 168)
+//             ], begin: Alignment.topLeft, end: Alignment.bottomRight),
 //           ),
-//           child: activeScreen, 
-//         ),
-//       ),
-//     );
+//           child: screenWidget,
+//         )));
 //   }
 // }
