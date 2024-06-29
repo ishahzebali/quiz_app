@@ -54,6 +54,9 @@ class QuestionsSummary extends StatelessWidget {
                         style: GoogleFonts.roboto(
                             color: const Color.fromARGB(255, 45, 0, 159),
                             fontWeight: FontWeight.bold)),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Text(data['correct_answer'] as String,
                         style: GoogleFonts.roboto(
                           color: const Color.fromARGB(255, 226, 242, 46),
